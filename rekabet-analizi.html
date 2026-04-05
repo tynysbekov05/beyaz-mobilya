@@ -3,106 +3,360 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rakip Analizi Raporu — Beyaz Mobilya</title>
+    <title>Rekabet Analizi — Beyaz Mobilya</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
         :root {
-            --ink: #111;
-            --paper: #f9f9f9;
-            --accent: #2c5282; /* Mavi aksan */
-            --accent-light: #63b3ed;
-            --muted: #718096;
-            --divider: #e2e8f0;
-            --card: #ffffff;
-            --shadow: rgba(0, 0, 0, 0.05);
+            --ink: #0a0a0a;
+            --paper: #f6f4f0;
+            --accent: #c45d3e;
+            --accent-light: #e8a48e;
+            --muted: #8a8580;
+            --divider: #d6d2cc;
+            --card: #fffefa;
+            --shadow: rgba(10, 10, 10, 0.06);
         }
+
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--paper);
             color: var(--ink);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
-        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
-        header { padding: 6rem 0 4rem; text-align: center; position: relative; }
-        .eyebrow { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1.5rem; }
-        h1 { font-family: 'Instrument Serif', serif; font-size: 3.5rem; font-weight: 400; line-height: 1.1; margin-bottom: 1.5rem; }
-        h1 em { color: var(--accent); font-style: italic; }
-        .subtitle { font-size: 1.05rem; color: var(--muted); max-width: 540px; margin: 0 auto; line-height: 1.7; }
-        .phases { display: flex; flex-direction: column; gap: 2rem; padding-bottom: 6rem; }
-        .phase { background: var(--card); border: 1px solid var(--divider); border-radius: 16px; padding: 2.5rem; position: relative; }
-        .phase::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--accent), var(--accent-light)); border-radius: 4px 0 0 4px; }
-        .phase-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; }
-        .phase-number { font-family: 'Instrument Serif', serif; font-size: 3rem; color: var(--accent); line-height: 1; opacity: 0.3; }
-        .phase-title { font-family: 'Instrument Serif', serif; font-size: 1.6rem; font-weight: 400; }
-        .color-swatches { display: flex; gap: 0.5rem; margin-top: 0.5rem; margin-bottom: 1rem; }
-        .swatch { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--divider); }
-        .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
-        .tag { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 100px; background: var(--paper); border: 1px solid var(--divider); color: var(--muted); font-weight: 500; }
-        ul { margin-left: 1.5rem; margin-top: 0.5rem; }
-        li { margin-bottom: 0.5rem; }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            padding: 6rem 0 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, var(--accent));
+        }
+
+        .eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 em {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: var(--muted);
+            max-width: 540px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+            margin: 4rem auto;
+        }
+
+        .phases {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding-bottom: 6rem;
+        }
+
+        .phase {
+            background: var(--card);
+            border: 1px solid var(--divider);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .phase:hover {
+            box-shadow: 0 12px 40px var(--shadow);
+        }
+
+        .phase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-light));
+            border-radius: 4px 0 0 4px;
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .phase-number {
+            font-family: 'Instrument Serif', serif;
+            font-size: 3rem;
+            color: var(--accent);
+            line-height: 1;
+            opacity: 0.3;
+            flex-shrink: 0;
+        }
+
+        .phase-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        .phase-body {
+            padding-left: 0;
+            color: #3a3835;
+            font-size: 0.92rem;
+            line-height: 1.75;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.25rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.85rem;
+            border-radius: 100px;
+            background: var(--paper);
+            border: 1px solid var(--divider);
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .swatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--divider);
+        }
+
+        .score-box {
+            background: var(--paper);
+            border: 1px solid var(--divider);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed var(--divider);
+            padding: 0.4rem 0;
+            font-size: 0.85rem;
+        }
+        
+        .score-row:last-child {
+            border-bottom: none;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0 4rem;
+            border-top: 1px solid var(--divider);
+        }
+
+        footer p {
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+        }
+
+        .flow-connector {
+            display: flex;
+            justify-content: center;
+            padding: 0.25rem 0;
+        }
+
+        @media print {
+            body::after { display: none; }
+            .phase { break-inside: avoid; box-shadow: none; }
+            header::before, .flow-connector { display: none; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <p class="eyebrow">Piyasa İstihbaratı</p>
-            <h1>Beyaz Mobilya<br><em>Rakip Analizi</em></h1>
-            <p class="subtitle">Ankara pazarındaki en güçlü rakiplerin (Luxury Line, Valerno, Kelebek) veri odaklı analizi ve stratejik çıkarımlar.</p>
+            <p class="eyebrow">Rekabet Analizi</p>
+            <h1>Beyaz Mobilya<br><em>Piyasa Araştırması</em></h1>
+            <p class="subtitle">Ankara Mobilya Pazarı: Beyaz Mobilya'nın dönüşüm stratejisini belirlemek için en iyi rakiplerin derinlemesine analizi.</p>
         </header>
 
+        <div class="divider"></div>
+
         <div class="phases">
-            <!-- Competitor 1 -->
+            <!-- Summary -->
             <div class="phase">
-                <div class="phase-header"><span class="phase-number">01</span><h2 class="phase-title">Luxury Line Mobilya</h2></div>
-                <p><strong>Değer Önerisi (USP):</strong> İstanbul merkezli, lüks villalara ve özel global projelere hitap eden üst düzey marka.</p>
-                <p><strong>Lojistik & Kurulum:</strong> "Güvenilir teslimat ve profesyonel montaj." (Dünya çapında hizmet vurgusu)</p>
-                <div class="color-swatches">
-                    <div class="swatch" style="background:#000000;" title="Siyah"></div>
-                    <div class="swatch" style="background:#DCBD6F;" title="Altın"></div>
+                <div class="phase-header">
+                    <span class="phase-number">01</span>
+                    <h2 class="phase-title">Yönetici Özeti</h2>
                 </div>
-                <p><strong>Yazı Tipleri:</strong> Maven Pro</p>
-                <div class="tag-row"><span class="tag">Karanlık Mod (Dark Mode)</span><span class="tag">Üst Düzey Özel Üretim</span></div>
+                <div class="phase-body">
+                    <p>Ankara'daki üst düzey mobilya pazarı büyük ölçüde üst düzey bir görsel estetik oluşturmaya dayanıyor. Kazananlar, kalabalık "indirim mağazası" hissinden kaçınarak sürükleyici fotoğrafçılık ve sinematik ana ekranlar kullanarak kendilerini ayrıştırıyorlar. Birçok marka "mimari hizmetler"i bir kanca olarak kullansa da, <strong>Bölge İçi Ücretsiz Teslimat ve Kurulum'un lojistik garantileriyle Premium Hazır Koleksiyonlar</strong> sunan bir marka için önemli bir boşluk bulunmaktadır.</p>
+                </div>
             </div>
 
-            <!-- Competitor 2 -->
+            <div class="flow-connector"><svg width="2" height="24" viewBox="0 0 2 24" fill="none"><line x1="1" y1="0" x2="1" y2="24" stroke="currentColor" stroke-dasharray="3 3"/></svg></div>
+
+            <!-- Top Competitor 1 -->
             <div class="phase">
-                <div class="phase-header"><span class="phase-number">02</span><h2 class="phase-title">Valerno</h2></div>
-                <p><strong>Değer Önerisi (USP):</strong> 3D modelleme ile özel tasarım yeteneği ve modern/klasik koleksiyonların estetik birleşimi.</p>
-                <p><strong>Lojistik & Kurulum:</strong> Ana sayfada veya temel tekliflerde hizmet hızı ve teslimatla ilgili net bir vaat bulunmuyor.</p>
-                <div class="color-swatches">
-                    <div class="swatch" style="background:#FFFFFF;" title="Beyaz"></div>
-                    <div class="swatch" style="background:#7F6051;" title="Toprak Kahvesi"></div>
+                <div class="phase-header">
+                    <span class="phase-number">02</span>
+                    <h2 class="phase-title">Lazzoni (Puan: 8.75/10)</h2>
                 </div>
-                <p><strong>Yazı Tipleri:</strong> Alegreya Sans, Montserrat</p>
-                <div class="tag-row"><span class="tag">Toprak Tonları</span><span class="tag">3D Odaklı Tasarım</span></div>
+                <div class="phase-body">
+                    <p><strong>Yazı Tipleri:</strong> Özel minimalist Sans-Serif (Helvetica Neue benzeri).<br>
+                    <strong>Estetik:</strong> Ultra-premium, karanlık atmosferik tonlar.</p>
+                    <div class="color-swatches">
+                        <div class="swatch" style="background:#1a1a1a;" title="Obsidyen Siyah"></div>
+                        <div class="swatch" style="background:#f4f4f4;" title="Kırık Beyaz"></div>
+                        <div class="swatch" style="background:#8c8c8c;" title="Gri"></div>
+                    </div>
+                    <p><strong>Stratejik Not:</strong> Ana bölümlerinde genellikle üst düzey bir video sunumu yer alıyor; bu, statik katalog görsellerinin aksine algılanan değeri anında artıran standart dışı bir yaklaşımdır.</p>
+                    <div class="score-box">
+                        <div class="score-row"><span>Görsel Tasarım</span><span>10/10</span></div>
+                        <div class="score-row"><span>Mobil UX</span><span>9/10</span></div>
+                        <div class="score-row"><span>Sosyal Kanıt</span><span>9/10</span></div>
+                        <div class="score-row"><span>Genel Puan</span><span>8.75/10</span></div>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">Sinematik Video</span>
+                        <span class="tag">Minimalist Arayüz</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Competitor 3 -->
+            <div class="flow-connector"><svg width="2" height="24" viewBox="0 0 2 24" fill="none"><line x1="1" y1="0" x2="1" y2="24" stroke="currentColor" stroke-dasharray="3 3"/></svg></div>
+
+            <!-- Top Competitor 2 -->
             <div class="phase">
-                <div class="phase-header"><span class="phase-number">03</span><h2 class="phase-title">Kelebek Mobilya</h2></div>
-                <p><strong>Değer Önerisi (USP):</strong> Geniş kitlelere ulaşan, kullanıcı zevkini yansıtan modern ve erişilebilir estetik.</p>
-                <p><strong>Lojistik & Kurulum:</strong> "Erken Teslim Garantisi." (Seçili ürünlerde hızlı teslimat vaadi)</p>
-                <div class="color-swatches">
-                    <div class="swatch" style="background:#FFFFFF;" title="Beyaz"></div>
-                    <div class="swatch" style="background:#E21836;" title="Dinamik Kırmızı"></div>
+                <div class="phase-header">
+                    <span class="phase-number">03</span>
+                    <h2 class="phase-title">HekaHome (Puan: 8.0/10)</h2>
                 </div>
-                <p><strong>Yazı Tipleri:</strong> Macklin Display, Age Digital One</p>
-                <div class="tag-row"><span class="tag">Ticari / Yaygın</span><span class="tag">Hızlı Teslimat Şampiyonu</span></div>
+                <div class="phase-body">
+                    <p><strong>Yazı Tipleri:</strong> Yaklaşılabilir Sans-Serif (Inter / Roboto stili).<br>
+                    <strong>Estetik:</strong> Parlak, e-ticaret odaklı, rozet ve promosyonların yoğun kullanımı.</p>
+                    <div class="color-swatches">
+                        <div class="swatch" style="background:#ffffff;" title="Beyaz"></div>
+                        <div class="swatch" style="background:#e63946;" title="Aksiyon Kırmızısı"></div>
+                        <div class="swatch" style="background:#2b2d42;" title="Koyu Mavi"></div>
+                    </div>
+                    <p><strong>Stratejik Not:</strong> Hazır paketlere (Düğün Paketleri) güçlü bir vurgu yapılıyor. Zayıflıkları biraz karmaşık (kalabalık) hissettirmesidir, ancak güçleri son derece net değer önerileridir.</p>
+                    <div class="score-box">
+                        <div class="score-row"><span>Görsel Tasarım</span><span>7/10</span></div>
+                        <div class="score-row"><span>Mobil UX</span><span>9/10</span></div>
+                        <div class="score-row"><span>Eylem Çağrısı Stratejisi</span><span>9/10</span></div>
+                        <div class="score-row"><span>Genel Puan</span><span>8.0/10</span></div>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">Düğün Paketleri</span>
+                        <span class="tag">Net Fiyatlandırma</span>
+                    </div>
+                </div>
             </div>
-            
+
+            <div class="flow-connector"><svg width="2" height="24" viewBox="0 0 2 24" fill="none"><line x1="1" y1="0" x2="1" y2="24" stroke="currentColor" stroke-dasharray="3 3"/></svg></div>
+
+            <!-- Patterns -->
             <div class="phase">
-                <div class="phase-header"><span class="phase-number">04</span><h2 class="phase-title">Stratejik Sonuç Grafiği</h2></div>
-                <p>Toplanan veriler neticesinde markamızın uygulayacağı stratejik konumlandırma:</p>
-                <ul>
-                    <li><strong>Lojistikle Gelen Güven Avantajı:</strong> Yüksek segmentteki Luxury Line başarısını "Profesyonel Montaj" vaadine, ticari Kelebek ise "Erken Teslim" vaadine borçludur. Ortada yer alan Valerno'nun bunu kullanmaması bizim için devasa bir fırsattır. Ana teklifimiz (USP) kesinlikle <em>"Bölge İçi Ücretsiz Teslimat ve Profesyonel Kurulum"</em> olmalıdır.</li>
-                    <li><strong>Görsel Ayrışma ve Kimlik:</strong> Ticari markalar (Kelebek vb.) sert beyaz ve kırmızıyı, aşırı pahalı lüksler (Luxury Line) ise siyah ve altını kullanıyor. Biz, "Sıcak Beyaz (Warm Paper)" ve "Kiremit/Toprak (Terracotta)" kombinasyonu ile hem lüks hem de erişilebilir bir "Ayrıcalık" algısı yaratacağız.</li>
-                </ul>
+                <div class="phase-header">
+                    <span class="phase-number">04</span>
+                    <h2 class="phase-title">En İyi %10'un Kalıpları</h2>
+                </div>
+                <div class="phase-body">
+                    <ul>
+                        <li><strong>Video/Hareketli Ana Ekran:</strong> En iyi siteler artık statik kaydırıcılar (slider) kullanmıyor; ana alanda sürükleyici videolar veya kaydırmaya bağlı animasyonlar kullanıyorlar.</li>
+                        <li><strong>Lojistik Yoluyla Güven Sinyalleri:</strong> Sadece mobilya satmıyorlar; gönül rahatlığı satıyorlar (açık nakliye, montaj garantileri).</li>
+                        <li><strong>Küratörlü Koleksiyonlar:</strong> Ürünleri "Odalar" (Yatak Odası, Yemek Odası) bazında düzenlemek standarttır. Bunları eksiksiz "Hazır" paketler olarak sunmak ortalama sipariş değerini (AOV) artırır.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flow-connector"><svg width="2" height="24" viewBox="0 0 2 24" fill="none"><line x1="1" y1="0" x2="1" y2="24" stroke="currentColor" stroke-dasharray="3 3"/></svg></div>
+
+            <!-- Directions -->
+            <div class="phase">
+                <div class="phase-header">
+                    <span class="phase-number">05</span>
+                    <h2 class="phase-title">Beyaz Mobilya İçin Eyleme Geçirilebilir İpuçları</h2>
+                </div>
+                <div class="phase-body">
+                    <p>Lazzoni'nin <strong>birinci sınıf sinematik görsel estetiğini</strong> HekaHome'un <strong>pratik, hazır koleksiyon odağıyla</strong> birleştireceğiz. Mesaj net olacak: Güzel, üst düzey hazır koleksiyonlar ücretsiz olarak bölgenizde teslim edilir ve monte edilir. Renk paleti, markayı sıradan büyük mağazalardan uzaklaştırmak için sıcak, zarif tonlar içerecektir.</p>
+                </div>
             </div>
         </div>
+
+        <footer>
+            <p>PİYASA İSTİHBARATI &mdash; ARAŞTIRMA ODAKLI TASARIM</p>
+        </footer>
     </div>
 </body>
 </html>
