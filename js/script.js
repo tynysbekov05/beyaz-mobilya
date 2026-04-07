@@ -70,4 +70,106 @@ document.addEventListener("DOMContentLoaded", (event) => {
             }
         });
     });
+
+    // --- V2 JS MODIFICATIONS ---
+
+    // 1. CAROUSEL LOGIC
+    const carousels = document.querySelectorAll('.p-card-carousel');
+    carousels.forEach(carousel => {
+        const slides = carousel.querySelectorAll('.p-card-slide');
+        const prevBtn = carousel.querySelector('.p-card-arrow.prev');
+        const nextBtn = carousel.querySelector('.p-card-arrow.next');
+        let currentSlide = 0;
+
+        if (slides.length > 0) {
+            slides[0].classList.add('active');
+        }
+
+        const showSlide = (index) => {
+            slides.forEach(s => s.classList.remove('active'));
+            slides[index].classList.add('active');
+        };
+
+        if (nextBtn && prevBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // prevent lightbox opening
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            });
+
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // prevent lightbox opening
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            });
+        }
+    });
+
+    // 2. LIGHTBOX LOGIC
+    const lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.innerHTML = `
+        <button class="lightbox-close">×</button>
+        <button class="lightbox-arrow prev">‹</button>
+        <img class="lightbox-content" src="" alt="">
+        <button class="lightbox-arrow next">›</button>
+    `;
+    document.body.appendChild(lightbox);
+
+    const lightboxImg = lightbox.querySelector('.lightbox-content');
+    const lightboxClose = lightbox.querySelector('.lightbox-close');
+    const lightboxNext = lightbox.querySelector('.lightbox-arrow.next');
+    const lightboxPrev = lightbox.querySelector('.lightbox-arrow.prev');
+    
+    let activeLightboxGroup = [];
+    let currentLightboxIdx = 0;
+
+    const openLightbox = (imgSrc, group) => {
+        activeLightboxGroup = group;
+        currentLightboxIdx = group.indexOf(imgSrc);
+        lightboxImg.src = imgSrc;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden'; // prevent scrolling
+    };
+
+    const closeLightboxFn = () => {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+    };
+
+    const nextLightboxImg = (e) => {
+        e.stopPropagation();
+        if(activeLightboxGroup.length > 0) {
+            currentLightboxIdx = (currentLightboxIdx + 1) % activeLightboxGroup.length;
+            lightboxImg.src = activeLightboxGroup[currentLightboxIdx];
+        }
+    };
+
+    const prevLightboxImg = (e) => {
+        e.stopPropagation();
+        if(activeLightboxGroup.length > 0) {
+            currentLightboxIdx = (currentLightboxIdx - 1 + activeLightboxGroup.length) % activeLightboxGroup.length;
+            lightboxImg.src = activeLightboxGroup[currentLightboxIdx];
+        }
+    };
+
+    lightboxClose.addEventListener('click', closeLightboxFn);
+    lightbox.addEventListener('click', closeLightboxFn);
+    lightboxImg.addEventListener('click', (e) => e.stopPropagation());
+    lightboxNext.addEventListener('click', nextLightboxImg);
+    lightboxPrev.addEventListener('click', prevLightboxImg);
+
+    // Bind images to lightbox
+    const slidesInit = document.querySelectorAll('.p-card-slide');
+    slidesInit.forEach(slide => {
+        slide.addEventListener('click', () => {
+            // Find its parent carousel
+            const parent = slide.closest('.p-card-carousel');
+            if(parent) {
+                const groupSlides = parent.querySelectorAll('.p-card-slide');
+                const groupUrls = Array.from(groupSlides).map(s => s.src);
+                openLightbox(slide.src, groupUrls);
+            }
+        });
+    });
 });
