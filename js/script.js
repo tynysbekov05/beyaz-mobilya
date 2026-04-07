@@ -159,6 +159,28 @@ document.addEventListener("DOMContentLoaded", (event) => {
     lightboxNext.addEventListener('click', nextLightboxImg);
     lightboxPrev.addEventListener('click', prevLightboxImg);
 
+    // Hamburger Menu Logic
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('nav-active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        const navItems = navLinks.querySelectorAll('a');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (navLinks.classList.contains('nav-active')) {
+                    navLinks.classList.remove('nav-active');
+                    hamburger.classList.remove('active');
+                }
+            });
+        });
+    }
+
     // Bind images to lightbox
     const slidesInit = document.querySelectorAll('.p-card-slide');
     slidesInit.forEach(slide => {
