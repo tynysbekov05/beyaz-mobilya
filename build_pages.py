@@ -42,7 +42,7 @@ def generate_product_html(title, images):
                         <li>Modern ve Şık Tasarım</li>
                         <li>Özel Koleksiyon Serisi</li>
                     </ul>
-                    <a href="https://wa.me/905550000000?text=Merhaba,%20{urllib.parse.quote(title)}%20hakkında%20fiyat%20ve%20bilgi%20almak%20istiyorum." target="_blank" class="btn-whatsapp-outline">Hızlı Fiyat Al</a>
+                    <a href="https://wa.me/905424785431?text=Merhaba,%20{urllib.parse.quote(title)}%20hakkında%20fiyat%20ve%20bilgi%20almak%20istiyorum." target="_blank" class="btn-whatsapp-outline">Hızlı Fiyat Al</a>
                 </div>
             </div>"""
     return html
