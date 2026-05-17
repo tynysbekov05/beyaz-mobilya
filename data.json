@@ -1,0 +1,34 @@
+{
+  "yatak-odalari": [
+    { "title": "Lizbon Yatak Odası", "folder": "lizbon-yatak" },
+    { "title": "Roza Yatak Odası", "folder": "roza-yatak" },
+    { "title": "Bernido Akkor Yatak Odası", "folder": "bernido-3types/bernido-akkor-yatak" },
+    { "title": "Bernido Capella Yatak Odası", "folder": "bernido-3types/bernido-capella-yatak" },
+    { "title": "Bernido Nergis Yatak Odası", "folder": "bernido-3types/berndio-nergis-yatak" }
+  ],
+  "yemek-odalari": [
+    { "title": "Lizbon Yemek Odası", "folder": "lizbon-yemek" },
+    { "title": "Bernido Akkor Yemek Odası", "folder": "bernido-3types/bernido-akkor-yemek" },
+    { "title": "Bernido Capella Yemek Odası", "folder": "bernido-3types/bernido-capella-yemek" },
+    { "title": "Bernido Nergis Yemek Odası", "folder": "bernido-3types/bernido-nergis-yemek" }
+  ],
+  "koltuk-takimlari": [
+    { "title": "Bernido Akkor Koltuk Takımı", "folder": "bernido-3types/bernido-akkor-koltuk" },
+    { "title": "Bernido Capella Koltuk Takımı", "folder": "bernido-3types/bernido-capella-koltuk" }
+  ],
+  "kampanyalar": [
+    {
+      "id": "eskisini-getir",
+      "title": "Eskisini Getir, Yenisini Götür!",
+      "description": "Eski mobilyalarınızı değerinde alıyoruz! Tüm yeni koleksiyonlarımızda geçerli 25.000 TL'ye varan takas desteği ile evinizi yenilemenin tam zamanı.",
+      "features": [
+        "25.000 TL'ye Varan Takas Desteği",
+        "Tüm Ürünlerde Geçerli",
+        "Ücretsiz Değerleme",
+        "Nakliye ve Kurulum Bizden"
+      ],
+      "image": "assets/kampanyalar/eskisini-getir.jpg",
+      "whatsapp_text": "Merhaba, 'Eskisini Getir Yenisini Götür' kampanyası kapsamında 25.000 TL takas desteği hakkında detaylı bilgi almak istiyorum."
+    }
+  ]
+}

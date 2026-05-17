@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Указание пути к карте сайта для поисковиков
+Sitemap: https://beyazmobilya.com/sitemap.xml
